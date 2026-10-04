@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ChannelMap SUPER - Full System</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<style>.no-copy{user-select:none}.blur{filter:blur(8px)}</style>
+</head>
+<body class="bg-gray-100">
+<div class="max-w-lg mx-auto bg-white min-h-screen">
+<div class="bg-blue-600 text-white p-4 text-center">
+<h1 class="text-xl font-bold">ChannelMap SUPER v12</h1>
+<p class="text-xs">Doctor | Patient | Pharmacy | Med Rep - ALL FREE</p>
+<p class="text-xs mt-1 bg-white text-blue-600 inline-block px-2 py-1 rounded">Commercial Bank 8007544299 - GWN Wasana</p>
+</div>
+<div class="p-2 grid grid-cols-4 gap-2 text-xs text-center">
+<button onclick="show('doctor')" class="bg-blue-100 p-2 rounded">DOCTOR<br><b id="c1">2</b></button>
+<button onclick="show('patient')" class="bg-green-100 p-2 rounded">PATIENT<br><b id="c2">0</b></button>
+<button onclick="show('pharmacy')" class="bg-yellow-100 p-2 rounded">PHARMACY<br><b id="c3">2</b></button>
+<button onclick="show('medrep')" class="bg-purple-100 p-2 rounded">MED REP<br><b id="c4">0</b></button>
+</div>
+<div class="p-3">
+<div class="grid grid-cols-2 gap-2">
+<button onclick="reg('doctor')" class="bg-blue-600 text-white py-2 rounded text-sm">+ Doctor FREE</button>
+<button onclick="reg('patient')" class="bg-green-600 text-white py-2 rounded text-sm">+ Patient FREE</button>
+<button onclick="reg('pharmacy')" class="bg-yellow-600 text-white py-2 rounded text-sm">+ Pharmacy / Center</button>
+<button onclick="reg('medrep')" class="bg-purple-600 text-white py-2 rounded text-sm">+ Medical Rep</button>
+</div>
+<div id="list" class="mt-4 space-y-2"></div>
+<div class="mt-6 border-t pt-3">
+<h3 class="font-bold">Prescription Safe - Rs.250/month - No Screenshot</h3>
+<div id="pres" class="bg-gray-50 p-3 rounded mt-2">
+<p id="presTxt" class="blur">Rx: Example - Amoxicillin 500mg BD x 5days...</p>
+<button onclick="pay()" class="mt-2 bg-red-600 text-white px-3 py-1 rounded text-xs">Pay Rs.250 to 8007544299 - Unlock Download</button>
+</div>
+</div>
+</div>
+</div>
+<div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+<div class="bg-white rounded p-4 w-full max-w-sm">
+<h3 id="mTitle" class="font-bold"></h3>
+<div id="mFields" class="mt-3"></div>
+<button onclick="saveReg()" class="mt-3 w-full bg-blue-600 text-white py-2 rounded">Register FREE - Rating High = Top</button>
+<button onclick="document.getElementById('modal').classList.add('hidden')" class="mt-2 w-full bg-gray-200 py-2 rounded">Close</button>
+</div>
+</div>
+<script>
+let cur=''; let db={doctor:[{name:"Dr. Perera GP",area:"Hikkaduwa",rating:4.9,company:"Hemas Hospital"},{name:"Dr. Silva Consultant",area:"Galle",rating:4.7,company:"Asiri"}],patient:[],pharmacy:[{name:"Hikkaduwa Pharmacy",area:"Hikkaduwa",rating:4.8},{name:"Galle Channeling Center",area:"Galle",rating:4.6}],medrep:[]};
+function show(t){cur=t; let d=db[t]; d.sort((a,b)=>b.rating-a.rating); let h='<h3 class="font-bold uppercase">'+t+' LIST - High Rating Top</h3>'; d.forEach(x=>{h+=`<div class="border p-2 rounded"><b>${x.name}</b><br><small>${x.area||''} ${x.company?'| '+x.company:''} ${x.product?'| '+x.product:''}</small><br><span class="text-yellow-500 text-xs">${'⭐'.repeat(Math.round(x.rating))} ${x.rating.toFixed(1)} - GP High Rating</span> <button onclick="rate('${t}','${x.name}')" class="ml-2 bg-gray-200 px-2 rounded text-xs">+Rate</button></div>`}); document.getElementById('list').innerHTML=h; document.getElementById('c1').innerText=db.doctor.length; document.getElementById('c2').innerText=db.patient.length; document.getElementById('c3').innerText=db.pharmacy.length; document.getElementById('c4').innerText=db.medrep.length;}
+function reg(t){cur=t; document.getElementById('modal').classList.remove('hidden'); document.getElementById('mTitle').innerText=t.toUpperCase()+' FREE REGISTRATION'; let html=''; if(t=='doctor') html='<input id="f1" placeholder="Doctor Name GP/Consultant" class="border w-full p-2 mb-2 rounded"><input id="f2" placeholder="Area" class="border w-full p-2 mb-2 rounded"><input id="f3" placeholder="Hospital/Company" class="border w-full p-2 mb-2 rounded"><input id="f4" placeholder="Phone" class="border w-full p-2 mb-2 rounded">'; if(t=='patient') html='<input id="f1" placeholder="Patient Name" class="border w-full p-2 mb-2 rounded"><input id="f2" placeholder="Area" class="border w-full p-2 mb-2 rounded"><input id="f4" placeholder="Phone" class="border w-full p-2 mb-2 rounded">'; if(t=='pharmacy') html='<input id="f1" placeholder="Pharmacy / Channel Center Name" class="border w-full p-2 mb-2 rounded"><input id="f2" placeholder="Area" class="border w-full p-2 mb-2 rounded"><input id="f3" placeholder="Owner/Company" class="border w-full p-2 mb-2 rounded"><input id="f4" placeholder="Phone" class="border w-full p-2 mb-2 rounded">'; if(t=='medrep') html='<input id="f1" placeholder="Med Rep Name" class="border w-full p-2 mb-2 rounded"><input id="f2" placeholder="Area *Required" class="border w-full p-2 mb-2 rounded"><input id="f5" placeholder="Product Name *Required" class="border w-full p-2 mb-2 rounded"><input id="f3" placeholder="Company Name *Required" class="border w-full p-2 mb-2 rounded"><input id="f4" placeholder="Phone" class="border w-full p-2 mb-2 rounded"><p class="text-xs text-red-500">Area+Product+Company aniwaryayi</p>'; document.getElementById('mFields').innerHTML=html;}
+function saveReg(){let n=document.getElementById('f1')?.value, a=document.getElementById('f2')?.value, c=document.getElementById('f3')?.value, p=document.getElementById('f5')?.value, ph=document.getElementById('f4')?.value; if(!n){alert('Name danna');return;} if(cur=='medrep'&&(!a||!p||!c)){alert('Area, Product, Company 3ma danna!');return;} let o={name:n,area:a,company:c,product:p,phone:ph,rating:4.5+Math.random()*0.5}; db[cur].push(o); document.getElementById('modal').classList.add('hidden'); show(cur); alert('FREE Registration Hari! High rating nam udatama enawa!');}
+function rate(t,nm){let x=db[t].find(z=>z.name==nm); if(x){x.rating=Math.min(5,x.rating+0.15); show(t);}}
+function pay(){alert('Commercial Bank Hikkaduwa - 8007544299 - GWN Wasana - Rs.250 gewanna\\nReceipt WhatsApp karanna - Prescription unlock karannam!'); document.getElementById('presTxt').classList.remove('blur'); document.getElementById('presTxt').innerText='✅ PAID - Rx: Amoxicillin 500mg BD x 5days, Paracetamol 500mg TDS - Download enabled';}
+show('doctor');
+document.addEventListener('contextmenu',e=>e.preventDefault());
+document.addEventListener('keydown',e=>{if(e.key=='PrintScreen'){e.preventDefault();alert('Screenshot Block - Rs.250 gewanna');}});
+</script>
+</body>
+</html>
